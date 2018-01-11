@@ -69,9 +69,7 @@ server.get('/measurements/:timestamp', validate(validation.get), (req, res) => {
         }else{
             res.sendStatus(404);
         }
-        //console.log("Data is: ", data);
     }
-  //res.sendStatus(501); // not implemented
 });
 
 // features/01-measurements/03-update-measurement.feature
@@ -98,17 +96,7 @@ server.put('/measurements/:timestamp', validate(validation.update), (req, res) =
     }else{
         res.sendStatus(404); //measurement does not exist
     }
-  /* Example:
-  assert.equal(req.params.timestamp, '2015-09-01T16:00:00.000Z');
 
-  assert.deepEqual(res.body, {
-    timestamp: '2015-09-01T16:00:00.000Z',
-    temperature: 27.1,
-    dewPoint: 16.7,
-    precipitation: 15.2
-  });
-  */
-  //res.sendStatus(501); // not implemented
 });
 
 // features/01-measurements/03-update-measurement.feature
@@ -130,14 +118,7 @@ server.patch('/measurements/:timestamp', validate(validation.patch), (req, res) 
     }else{
        res.sendStatus(404); //measurements do not exist
     }
-  /* Example:
-  assert.equal(req.params.timestamp, '2015-09-01T16:00:00.000Z');
-  assert.deepEqual(res.body, {
-    timestamp: '2015-09-01T16:00:00.000Z',
-    precipitation: 15.2
-  });
-  */
-  //res.sendStatus(501); // not implemented
+
 });
 
 // features/01-measurements/04-delete-measurement.feature
@@ -150,10 +131,7 @@ server.delete('/measurements/:timestamp', validate(validation.delete), (req, res
     }else{
        res.sendStatus(404); //measurement not found
     }
-  /* Example:
-  assert.equal(req.params.timestamp, '2015-09-01T16:20:00.000Z');
-  */
-  //res.sendStatus(501); // not implemented
+
 });
 
 // features/02-stats/01-get-stats.feature
@@ -178,12 +156,12 @@ server.get('/stats', (req, res) => {
             //console.log("stat is: ", stats[i]);
             switch(stats[i]){
                 case 'min':
-                    //console.log("fromDateTime in case is: ", req.query.fromDateTime);
+                   
                     data = {};
                     data.metric = metrics[j];
                     data.stat = stats[i];
                     data.value = parseFloat(getMin(req.query.fromDateTime, req.query.toDateTime, metrics[j]).toFixed(1));
-                    //console.log("data.value is: " +data.value);
+                  
                     if(!isNaN(data.value) && isFinite(data.value)) results.push(data);
                     break;
                 case 'max':
@@ -191,7 +169,7 @@ server.get('/stats', (req, res) => {
                     data.metric = metrics[j];
                     data.stat = stats[i];
                     data.value = parseFloat(getMax(req.query.fromDateTime, req.query.toDateTime, metrics[j]).toFixed(1));
-                    //console.log("data.value is: " + data.value);
+                    
                     if(!isNaN(data.value) && isFinite(data.value)) results.push(data);
                     break;
                 case 'average':
@@ -199,7 +177,7 @@ server.get('/stats', (req, res) => {
                     data.metric = metrics[j];
                     data.stat = stats[i];
                     data.value = parseFloat(getAverage(req.query.fromDateTime, req.query.toDateTime, metrics[j]).toFixed(1));
-                    //console.log("data.value is: " + data.value);
+                   
                     if(!isNaN(data.value) && isFinite(data.value)) results.push(data);
                     break;
             }
@@ -211,40 +189,7 @@ server.get('/stats', (req, res) => {
     //Get stats for a well-reported metric
     res.status(200).send(results);
     
-  /* Example:
-    assert.deepEqual(req.query.metric, [
-      'temperature',
-      'dewPoint'
-    ]);
 
-    assert.deepEqual(req.query.stat, [
-      'min',
-      'max'
-    ]);
-    res.send([
-      {
-        metric: 'temperature',
-        stat: 'min'
-        value: 27.1
-      },
-      {
-        metric: 'temperature',
-        stat: 'max'
-        value: 27.5
-      },
-      {
-        metric: 'dewPoint',
-        stat: 'min'
-        value: 16.9
-      },
-      {
-        metric: 'dewPoint',
-        stat: 'max'
-        value: 17.3
-      }
-    ]);
-  */
-  //res.sendStatus(501); // not implemented
 });
 function getMin(fromDateTime, toDateTime, metric){
     var values = [], from = parse(fromDateTime), to = parse(toDateTime), date;
